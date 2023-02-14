@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html style="height: 100%" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+</head>
+
+<body style="height: 100%">
+
+<div th:insert="fragments/header :: header "></div>
+
+<div style="height: 100%;width: 100%;display: flex">
+    <div th:insert="fragments/menu :: menu" style="height: 100%;float:left;width: 30%"></div>
+
+    <div style="width: 70%"><h1 th:text="${data}"></h1></div>
+</div>
+
+<div th:insert="fragments/footer :: footer(date=${currentDate})"></div>
+
+</body>
+</html>
