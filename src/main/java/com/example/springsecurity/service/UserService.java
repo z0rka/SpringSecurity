@@ -136,10 +136,10 @@ public class UserService {
      * Method to add  address to the user
      *
      * @param userName- name of the user
-     * @param country - country of the user
-     * @param city - city of the user
-     * @param house - house of the user
-     * @param street - street of the user
+     * @param country   - country of the user
+     * @param city      - city of the user
+     * @param house     - house of the user
+     * @param street    - street of the user
      */
     @Transactional
     public void addAddress(String userName, String country, String city, String street, String house) {
@@ -152,9 +152,14 @@ public class UserService {
 
         Optional<UserInfo> userInfo = userRepository.findFirstByName(userName);
 
+        if (addressRepository.findFirstByUserInfo(userInfo.orElseThrow(
+                () -> new EntityNotFoundException("User not exists"))).isPresent()) {
+            log.error("Address already exists");
+            return;
+        }
+
         Address address = new Address();
-        address.setUserInfo(userInfo
-                .orElseThrow(() -> new EntityNotFoundException("Client with name " + userName + " not exists")));
+        address.setUserInfo(userInfo.get());
         address.setCountry(country);
         address.setCity(city);
         address.setStreet(street);

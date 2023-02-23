@@ -28,6 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Load user from database by his username and formatting him into User from spring security
+     *
      * @param username - login of the user
      * @return {@link UserDetails}
      */
