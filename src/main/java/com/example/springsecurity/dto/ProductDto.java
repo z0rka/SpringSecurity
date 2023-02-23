@@ -5,8 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author z0rka 13.02.2023
  * Product DTO to convert {@link com.example.springsecurity.model.Product}
+ *
+ * @author z0rka 13.02.2023
  */
 @Data
 @AllArgsConstructor

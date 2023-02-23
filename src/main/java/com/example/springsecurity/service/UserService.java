@@ -6,19 +6,19 @@ import com.example.springsecurity.model.UserRole;
 import com.example.springsecurity.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * @author z0rka 13.02.2023
  * Service for UserRepository
+ *
+ * @author z0rka 13.02.2023
  */
 @Service
 @RequiredArgsConstructor
@@ -31,6 +31,9 @@ public class UserService {
 
     /**
      * Method to parse User to UserDTO
+     *
+     * @param user - user from database
+     * @return {@link UserInfoDto} - parsed user
      */
     private UserInfoDto parseUser(UserInfo user) {
         return objectMapper.convertValue(user, UserInfoDto.class);
@@ -43,11 +46,15 @@ public class UserService {
      * @param password - password
      * @param role     - role
      */
+    @Transactional
     public void addUser(String name, String password, UserRole role) {
         log.info("Adding user method invoked");
 
         if (name == null || password == null || role == null) {
             log.error("Parameter is null");
+            return;
+        } else if (userRepository.findFirstByName(name).isPresent()) {
+            log.error("User with such name already exists!");
             return;
         }
 
@@ -66,6 +73,7 @@ public class UserService {
      *
      * @param id - users id
      */
+    @Transactional
     public void deleteUser(int id) {
         log.info("Deleting user method invoked");
         userRepository.deleteById(id);

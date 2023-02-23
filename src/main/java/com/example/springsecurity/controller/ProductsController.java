@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author z0rka 06.02.2023;
  * Controller of the products
+ *
+ * @author z0rka 06.02.2023;
  */
 @RestController
 @RequiredArgsConstructor

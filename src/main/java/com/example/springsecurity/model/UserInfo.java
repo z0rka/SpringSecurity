@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Entity for table user_info
+ *
  * @author z0rka 13.02.2023
  */
 @Entity

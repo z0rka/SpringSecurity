@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.time.LocalDate;
 
 /**
- * @author z0rka 13.02.2023
  * Controller of the basic windows
+ *
+ * @author z0rka 13.02.2023
  */
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +20,9 @@ import java.time.LocalDate;
 public class ApplicationController {
 
     /**
-     * Open basic window with time
+     * Open basic window with time in millis
+     *
+     * @return basic window with set time
      */
     @GetMapping("info")
     public String info(Model model) {
@@ -29,7 +32,9 @@ public class ApplicationController {
     }
 
     /**
-     * Open basic window
+     * Open welcome window
+     *
+     * @return basic window with word "Welcome"
      */
     @GetMapping("welcome")
     public String welcome(Model model) {
@@ -38,11 +43,5 @@ public class ApplicationController {
         return "basicWindow";
     }
 
-    /**
-     * Open error
-     */
-    @GetMapping("403")
-    public String error403() {
-        return "/error/403";
-    }
+
 }

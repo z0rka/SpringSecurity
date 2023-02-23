@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author z0rka 13.02.2023
  * Login controller for users
+ *
+ * @author z0rka 13.02.2023
  */
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     /**
      * Login page
+     *
+     * @return login page for user
      */
     @GetMapping("")
     public String login() {

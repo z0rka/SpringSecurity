@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author z0rka 13.02.2023
  * ProductRepository service
+ *
+ * @author z0rka 13.02.2023
  */
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,9 @@ public class ProductService {
 
     /**
      * Method to parse Product to ProductDTO
+     *
+     * @param product- product from database
+     * @return {@link ProductDto} - converted product
      */
     private ProductDto parseProduct(Product product) {
         log.info("Parsing product");
@@ -73,7 +77,7 @@ public class ProductService {
     /**
      * Method to get all products
      *
-     * @return List<ProductDto>
+     * @return List of {@link ProductDto}
      */
 
     public List<ProductDto> getAll() {
@@ -88,7 +92,7 @@ public class ProductService {
      * Method to get  product by id
      *
      * @param id - product id
-     * @return ProductDto
+     * @return {@link ProductDto}
      */
     public ProductDto getById(int id) {
         log.info("Get by id method invoked");

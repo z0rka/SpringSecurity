@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Entity for table Product
+ *
  * @author z0rka 13.02.2023
- * Product for table Product
  */
 
 @Entity

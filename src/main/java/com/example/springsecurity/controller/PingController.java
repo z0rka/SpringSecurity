@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Controller to check if server is up
+ *
  * @author z0rka 13.02.2023
- * Controller to check if serveris up
  */
 @RestController
 @RequestMapping("/ping")
@@ -16,6 +17,8 @@ public class PingController {
 
     /**
      * Ping window
+     *
+     * @return String "OK"
      */
     @GetMapping("")
     public String ping() {

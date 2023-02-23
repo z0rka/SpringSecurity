@@ -1,7 +1,6 @@
 package com.example.springsecurity.security;
 
 import com.example.springsecurity.model.UserRole;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +15,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * @author z0rka 13.02.2023
  * Security app configuration
+ *
+ * @author z0rka 13.02.2023
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    public static final String WELCOME = "/welcome";
-    public static final String LOGIN = "/login";
+    public static final String WELCOME_LINK = "/welcome";
+    public static final String LOGIN_LINK = "/login";
+
     @Autowired
     @Lazy
     private UserDetailsService userDetailsService;
@@ -46,15 +47,16 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/ping", LOGIN).permitAll()
+                        .requestMatchers("/ping", LOGIN_LINK).permitAll()
                         .requestMatchers("/products").hasRole(UserRole.ADMIN.name())
-                        .requestMatchers("/info", WELCOME).hasAnyRole(UserRole.DEFAULT.name(), UserRole.ADMIN.name())
+                        .requestMatchers("/info", WELCOME_LINK).hasAnyRole(UserRole.DEFAULT.name(),
+                                UserRole.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage(LOGIN)
-                        .loginProcessingUrl(LOGIN)
-                        .defaultSuccessUrl(WELCOME, true)
+                        .loginPage(LOGIN_LINK)
+                        .loginProcessingUrl(LOGIN_LINK)
+                        .defaultSuccessUrl(WELCOME_LINK, true)
                         .permitAll()
                 )
                 .exceptionHandling().accessDeniedPage("/403").and()
