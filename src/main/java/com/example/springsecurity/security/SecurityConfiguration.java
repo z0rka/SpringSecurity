@@ -30,11 +30,17 @@ public class SecurityConfiguration {
     @Lazy
     private UserDetailsService userDetailsService;
 
+    /**
+     * Encoder
+     */
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * authenticationProvide
+     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -43,11 +49,14 @@ public class SecurityConfiguration {
         return authenticationProvider;
     }
 
+    /**
+     * Filter for security
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/ping", LOGIN_LINK).permitAll()
+                        .requestMatchers("/ping", LOGIN_LINK, "/user").permitAll()
                         .requestMatchers("/products").hasRole(UserRole.ADMIN.name())
                         .requestMatchers("/info", WELCOME_LINK).hasAnyRole(UserRole.DEFAULT.name(),
                                 UserRole.ADMIN.name())

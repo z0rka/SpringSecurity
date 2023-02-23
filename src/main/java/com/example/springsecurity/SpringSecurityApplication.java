@@ -23,7 +23,7 @@ public class SpringSecurityApplication {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void init() {
+    public void init() {//Method to add user with role admin and user with default role for access test
 
         userService.addUser("Admin", "qwerty", UserRole.ADMIN);
 
