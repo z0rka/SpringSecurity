@@ -1,5 +1,6 @@
 package com.example.springsecurity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,9 @@ public class UserInfo {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @OneToOne(mappedBy = "userInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Address address;
 
 }

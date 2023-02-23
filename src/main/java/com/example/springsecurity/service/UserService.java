@@ -1,8 +1,11 @@
 package com.example.springsecurity.service;
 
+import com.example.springsecurity.dto.AddressDto;
 import com.example.springsecurity.dto.UserInfoDto;
+import com.example.springsecurity.model.Address;
 import com.example.springsecurity.model.UserInfo;
 import com.example.springsecurity.model.UserRole;
+import com.example.springsecurity.repository.AddressRepository;
 import com.example.springsecurity.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,9 +28,11 @@ import java.util.Optional;
 @Slf4j
 
 public class UserService {
+    public static final String USER_NOT_FOUND = "User not found";
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
     private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
 
     /**
      * Method to parse User to UserDTO
@@ -88,8 +93,23 @@ public class UserService {
      */
     public UserInfoDto getUserById(int id) {
         Optional<UserInfo> user = userRepository.findById(id);
-        return parseUser(user.orElseThrow(() -> new EntityNotFoundException("User not found")));
+        return parseUser(user.orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND)));
     }
+
+    /**
+     * Method to get  user full info by id
+     *
+     * @param id - users id
+     * @return UserDto
+     */
+    @Transactional
+    public UserInfoDto getUserFullById(int id) {
+        Optional<UserInfo> user = userRepository.findById(id);
+        UserInfoDto userDto = parseUser(user.orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND)));
+        userDto.setAddress(objectMapper.convertValue(user.get().getAddress(), AddressDto.class));
+        return userDto;
+    }
+
 
     /**
      * Method to get all users
@@ -109,6 +129,39 @@ public class UserService {
      */
     public UserInfoDto getByName(String name) {
         Optional<UserInfo> user = userRepository.findFirstByName(name);
-        return parseUser(user.orElseThrow(() -> new EntityNotFoundException("User not found")));
+        return parseUser(user.orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND)));
+    }
+
+    /**
+     * Method to add  address to the user
+     *
+     * @param userName- name of the user
+     * @param country - country of the user
+     * @param city - city of the user
+     * @param house - house of the user
+     * @param street - street of the user
+     */
+    @Transactional
+    public void addAddress(String userName, String country, String city, String street, String house) {
+        log.info("Add address method invoked");
+
+        if (country == null || city == null || street == null || house == null) {
+            log.error("Not correct data!");
+            return;
+        }
+
+        Optional<UserInfo> userInfo = userRepository.findFirstByName(userName);
+
+        Address address = new Address();
+        address.setUserInfo(userInfo
+                .orElseThrow(() -> new EntityNotFoundException("Client with name " + userName + " not exists")));
+        address.setCountry(country);
+        address.setCity(city);
+        address.setStreet(street);
+        address.setHouse(house);
+
+        addressRepository.save(address);
+
+        log.info("Add address method ended");
     }
 }

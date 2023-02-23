@@ -24,4 +24,6 @@ public class UserInfoDto {
     private String password;
 
     private UserRole role;
+
+    private AddressDto address;
 }

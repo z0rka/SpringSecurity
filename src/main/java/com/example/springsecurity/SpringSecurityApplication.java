@@ -24,10 +24,13 @@ public class SpringSecurityApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() {//Method to add user with role admin and user with default role for access test
+        //Also test product added
 
         userService.addUser("Admin", "qwerty", UserRole.ADMIN);
 
         userService.addUser("User", "ytrewq", UserRole.DEFAULT);
+
+        userService.addAddress("Admin", "Ukraine", "Kyiv", "Khreshchatyk", "20");
 
         productService.add("Iphone", 1000.0f);
     }

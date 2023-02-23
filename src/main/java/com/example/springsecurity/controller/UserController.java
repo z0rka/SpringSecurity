@@ -52,6 +52,19 @@ public class UserController {
     }
 
     /**
+     * Get user full info by id
+     *
+     * @param id - id of the user in DB
+     * @return {@link UserInfoDto}
+     */
+    @GetMapping("/full/{id}")
+    public UserInfoDto getFullUser(@PathVariable int id) {
+        log.info("Get full user method invoked");
+
+        return userService.getUserFullById(id);
+    }
+
+    /**
      * Get all users
      *
      * @return List of {@link UserInfoDto}
@@ -77,5 +90,4 @@ public class UserController {
 
         log.info("Delete user method ended");
     }
-
 }
